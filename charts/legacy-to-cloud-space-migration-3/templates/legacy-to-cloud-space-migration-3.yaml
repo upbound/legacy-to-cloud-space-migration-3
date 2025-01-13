@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: legacy-to-cloud-space-migration-3
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/upbound/legacy-to-cloud-space-migration-3.git
+    path: /
+    targetRevision: HEAD
+  destination:
+    server: https://upbound-aws-us-east-1.space.mxe.upbound.io/apis/spaces.upbound.io/v1beta1/namespaces/default/controlplanes/legacy-to-cloud-space-migration-3/k8s
+    namespace: crossplane-system
+  syncPolicy:
+    automated:
+      selfHeal: true
